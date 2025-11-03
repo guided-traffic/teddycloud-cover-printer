@@ -817,6 +817,277 @@
   background: rgba(220, 38, 38, 1);
 }
 
+/* Footer */
+.footer {
+  background: white;
+  color: #6b7280;
+  padding: 1rem 2rem;
+  margin: 2rem;
+  margin-top: auto;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.footer-left,
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-text {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.footer-link {
+  color: #374151;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.footer-link:hover {
+  background: #f3f4f6;
+  color: #667eea;
+  transform: translateY(-1px);
+}
+
+.creator-link {
+  font-weight: 600;
+}
+
+.creator-link svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.creator-link:hover svg {
+  opacity: 1;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: auto;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+  border-radius: 12px 12px 0 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+}
+
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #374151;
+}
+
+.modal-body {
+  padding: 2rem 1.5rem;
+  max-height: calc(90vh - 100px);
+  overflow-y: auto;
+}
+
+.modal-body p {
+  margin: 0.5rem 0;
+  font-size: 0.9375rem;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.modal-body p:first-child {
+  margin-top: 0;
+}
+
+.modal-body p:last-child {
+  margin-bottom: 0;
+}
+
+.impressum-section {
+  margin-bottom: 2rem;
+}
+
+.impressum-section:last-child {
+  margin-bottom: 0;
+}
+
+.impressum-section h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 1rem 0;
+}
+
+.impressum-section h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.impressum-section h4:first-of-type {
+  margin-top: 0.5rem;
+}
+
+.impressum-section a {
+  color: #667eea;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.impressum-section a:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+/* Dark Mode - Footer and Modal */
+.dark-mode .footer {
+  background: #1f1f1f;
+  border-color: #3d3d3d;
+  color: #9ca3af;
+}
+
+.dark-mode .footer-text {
+  color: #9ca3af;
+}
+
+.dark-mode .footer-link {
+  color: #d1d5db;
+}
+
+.dark-mode .footer-link:hover {
+  background: #2a2a2a;
+  color: #667eea;
+}
+
+.dark-mode .modal-content {
+  background: #1f1f1f;
+}
+
+.dark-mode .modal-header {
+  background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+  border-bottom-color: #3d3d3d;
+}
+
+.dark-mode .modal-header h2 {
+  color: #e5e7eb;
+}
+
+.dark-mode .modal-close {
+  color: #9ca3af;
+}
+
+.dark-mode .modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #d1d5db;
+}
+
+.dark-mode .modal-body p {
+  color: #d1d5db;
+}
+
+.dark-mode .impressum-section h3 {
+  color: #e5e7eb;
+}
+
+.dark-mode .impressum-section h4 {
+  color: #d1d5db;
+}
+
+.dark-mode .impressum-section a {
+  color: #818cf8;
+}
+
+.dark-mode .impressum-section a:hover {
+  color: #a5b4fc;
+}
+
 /* Print Styles - Dynamic dimensions handled by TypeScript */
 @media print {
   .header,

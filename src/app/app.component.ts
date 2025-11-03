@@ -45,6 +45,9 @@ export class AppComponent {
   // Dark mode state
   isDarkMode = signal(false);
 
+  // Modal state
+  showImpressum = false;
+
   // Paper sizes in cm
   paperSizes = [
     { label: '10×15 cm', width: 10, height: 15 },
