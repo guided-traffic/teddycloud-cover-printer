@@ -9,6 +9,7 @@ export interface AppSettings {
   allowWhitespace: boolean;
   showCropMarks: boolean;
   isDarkMode: boolean;
+  placeholderShape: 'rectangular' | 'round';
 }
 
 @Injectable({
@@ -27,7 +28,8 @@ export class StorageService {
     spacing: 2,
     allowWhitespace: false,
     showCropMarks: true,
-    isDarkMode: false
+    isDarkMode: false,
+    placeholderShape: 'rectangular'
   };
 
   /**

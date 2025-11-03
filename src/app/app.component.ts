@@ -59,6 +59,9 @@ export class AppComponent {
   pictureWidth = 44;
   pictureHeight = 44;
 
+  // Placeholder shape
+  placeholderShape: 'rectangular' | 'round' = 'rectangular';
+
   // Spacing in mm
   margins = 4;
   spacing = 2;
@@ -105,6 +108,7 @@ export class AppComponent {
     this.spacing = settings.spacing;
     this.allowWhitespace = settings.allowWhitespace;
     this.showCropMarks = settings.showCropMarks;
+    this.placeholderShape = settings.placeholderShape;
 
     // Load and apply dark mode preference
     this.isDarkMode.set(this.storageService.getDarkMode());
@@ -145,8 +149,11 @@ export class AppComponent {
     // Convert all measurements to mm for consistency
     const paperWidthMm = this.selectedPaperSize.width * 10; // cm to mm
     const paperHeightMm = this.selectedPaperSize.height * 10; // cm to mm
+
+    // For round placeholders, use diameter for both dimensions
     const pictureWidthMm = this.pictureWidth;
-    const pictureHeightMm = this.pictureHeight;
+    const pictureHeightMm = this.placeholderShape === 'round' ? this.pictureWidth : this.pictureHeight;
+
     const marginMm = this.margins;
     const spacingMm = this.spacing;
 
@@ -381,7 +388,7 @@ export class AppComponent {
     // At standard screen DPI (96 DPI): 1mm = 96/25.4 = 3.7795275591 CSS pixels
     const mmToCssPx = 96 / 25.4;
     const placeholderWidthPx = this.pictureWidth * mmToCssPx;
-    const placeholderHeightPx = this.pictureHeight * mmToCssPx;
+    const placeholderHeightPx = (this.placeholderShape === 'round' ? this.pictureWidth : this.pictureHeight) * mmToCssPx;
 
     // Calculate scale based on allowWhitespace setting
     const scaleX = placeholderWidthPx / placeholder.imageWidth;
@@ -605,7 +612,7 @@ export class AppComponent {
     // Get the actual placeholder dimensions in CSS pixels
     const mmToCssPx = 96 / 25.4;
     const placeholderWidthPx = this.pictureWidth * mmToCssPx;
-    const placeholderHeightPx = this.pictureHeight * mmToCssPx;
+    const placeholderHeightPx = (this.placeholderShape === 'round' ? this.pictureWidth : this.pictureHeight) * mmToCssPx;
 
     // Calculate minimum scale needed to cover the placeholder completely
     // The image must be at least as wide and as tall as the placeholder
@@ -633,7 +640,8 @@ export class AppComponent {
       spacing: this.spacing,
       allowWhitespace: this.allowWhitespace,
       showCropMarks: this.showCropMarks,
-      isDarkMode: this.isDarkMode()
+      isDarkMode: this.isDarkMode(),
+      placeholderShape: this.placeholderShape
     });
   }
 
@@ -650,6 +658,7 @@ export class AppComponent {
     this.spacing = 2;
     this.allowWhitespace = false;
     this.showCropMarks = true;
+    this.placeholderShape = 'rectangular';
 
     this.calculateGrid();
     this.updatePrintStyles();

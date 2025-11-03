@@ -299,6 +299,35 @@
   outline-offset: 2px;
 }
 
+/* Radio Group */
+.radio-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.radio-label input[type="radio"] {
+  width: 1.125rem;
+  height: 1.125rem;
+  cursor: pointer;
+  accent-color: #667eea;
+}
+
+.radio-label input[type="radio"]:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
 /* Info Section */
 .info-section {
   display: grid;
@@ -455,6 +484,27 @@
 .placeholder.filled:hover {
   border-color: #667eea;
   background: white;
+}
+
+/* Round placeholders */
+.placeholder.round {
+  border-radius: 50%;
+}
+
+.placeholder.round:hover {
+  border-radius: 50%;
+}
+
+.placeholder.round.drag-over {
+  border-radius: 50%;
+}
+
+.placeholder.round.filled {
+  border-radius: 50%;
+}
+
+.placeholder.round.filled:hover {
+  border-radius: 50%;
 }
 
 /* Crop marks for cutting - positioned at corners, extending outward */
@@ -625,6 +675,11 @@
 
 .image-container.dragging {
   cursor: grabbing;
+}
+
+/* Round placeholder image container */
+.placeholder.round .image-container {
+  border-radius: 50%;
 }
 
 .image-container img {
@@ -931,6 +986,15 @@
 }
 
 .dark-mode .checkbox-group input[type="checkbox"] {
+  accent-color: #667eea;
+}
+
+/* Radio Group - Dark Mode */
+.dark-mode .radio-label {
+  color: #d1d5db;
+}
+
+.dark-mode .radio-label input[type="radio"] {
   accent-color: #667eea;
 }
 
