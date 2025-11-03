@@ -822,8 +822,10 @@
   background: white;
   color: #6b7280;
   padding: 1rem 2rem;
-  margin: 2rem;
+  margin: 0 auto 20px auto;
   margin-top: auto;
+  max-width: 1740px;
+  width: 100%;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -833,8 +835,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1400px;
-  margin: 0 auto;
 }
 
 .footer-left,
