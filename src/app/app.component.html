@@ -71,6 +71,31 @@
       <div class="control-section">
         <h2>Picture Size</h2>
         <div class="form-group">
+          <label>Shape</label>
+          <div class="shape-selector">
+            <label class="shape-option shape-rectangular" [class.selected]="placeholderShape === 'rectangular'">
+              <input
+                type="radio"
+                name="placeholder-shape"
+                value="rectangular"
+                [(ngModel)]="placeholderShape"
+                (ngModelChange)="onParameterChange()"
+              />
+              <span class="shape-text">Square</span>
+            </label>
+            <label class="shape-option shape-round" [class.selected]="placeholderShape === 'round'">
+              <input
+                type="radio"
+                name="placeholder-shape"
+                value="round"
+                [(ngModel)]="placeholderShape"
+                (ngModelChange)="onParameterChange()"
+              />
+              <span class="shape-text">Round</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="placeholderShape === 'rectangular'">
           <label for="picture-width">Width (mm)</label>
           <input
             type="number"
@@ -81,12 +106,23 @@
             step="0.5"
           />
         </div>
-        <div class="form-group">
+        <div class="form-group" *ngIf="placeholderShape === 'rectangular'">
           <label for="picture-height">Height (mm)</label>
           <input
             type="number"
             id="picture-height"
             [(ngModel)]="pictureHeight"
+            (ngModelChange)="onParameterChange()"
+            min="1"
+            step="0.5"
+          />
+        </div>
+        <div class="form-group" *ngIf="placeholderShape === 'round'">
+          <label for="picture-diameter">Diameter (mm)</label>
+          <input
+            type="number"
+            id="picture-diameter"
+            [(ngModel)]="pictureWidth"
             (ngModelChange)="onParameterChange()"
             min="1"
             step="0.5"
@@ -133,7 +169,7 @@
             Allow Whitespace
           </label>
         </div>
-        <div class="form-group checkbox-group options-checkbox">
+        <div class="form-group checkbox-group options-checkbox" *ngIf="placeholderShape === 'rectangular'">
           <label for="show-crop-marks">
             <input
               type="checkbox"
@@ -210,16 +246,17 @@
               class="placeholder"
               [class.drag-over]="placeholder.isDragOver"
               [class.filled]="placeholder.imageData"
+              [class.round]="placeholderShape === 'round'"
               [style.width.mm]="pictureWidth"
-              [style.height.mm]="pictureHeight"
+              [style.height.mm]="placeholderShape === 'round' ? pictureWidth : pictureHeight"
               [style.left.mm]="placeholder.left"
               [style.top.mm]="placeholder.top"
               (dragover)="onDragOver($event, placeholder)"
               (dragleave)="onDragLeave($event, placeholder)"
               (drop)="onDrop($event, placeholder)"
             >
-              <!-- Crop marks for cutting -->
-              <div class="crop-marks" *ngIf="showCropMarks">
+              <!-- Crop marks for cutting (only for rectangular placeholders) -->
+              <div class="crop-marks" *ngIf="showCropMarks && placeholderShape === 'rectangular'">
                 <div class="crop-mark crop-mark-tl"></div>
                 <div class="crop-mark crop-mark-tr"></div>
                 <div class="crop-mark crop-mark-bl"></div>
@@ -248,26 +285,88 @@
                   [style.transform]="'translate(' + placeholder.offsetX + 'px, ' + placeholder.offsetY + 'px)'"
                   alt="Placeholder image"
                 />
-                <button class="reset-btn no-print" (click)="resetImage($event, placeholder)" title="Reset image (fit to fill)">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
-                    <path d="M21 3v5h-5"></path>
-                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
-                    <path d="M3 21v-5h5"></path>
-                  </svg>
-                </button>
-                <button class="clear-btn no-print" (click)="clearImage($event, placeholder)" title="Remove image">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                  </svg>
-                </button>
               </div>
+
+              <!-- Control buttons (outside image container to avoid clipping on round placeholders) -->
+              <button class="reset-btn no-print" *ngIf="placeholder.imageData" (click)="resetImage($event, placeholder)" title="Reset image (fit to fill)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                  <path d="M21 3v5h-5"></path>
+                  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                  <path d="M3 21v-5h5"></path>
+                </svg>
+              </button>
+              <button class="clear-btn no-print" *ngIf="placeholder.imageData" (click)="clearImage($event, placeholder)" title="Remove image">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer no-print">
+    <div class="footer-content">
+      <div class="footer-left">
+        <span class="footer-text">Created by</span>
+        <a href="https://hans-fischer.com" target="_blank" rel="noopener noreferrer" class="footer-link creator-link">
+          Hans Fischer
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+      </div>
+      <div class="footer-right">
+        <button class="footer-link" (click)="showImpressum = true">Impressum</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Impressum Modal -->
+  <div class="modal-overlay no-print" *ngIf="showImpressum" (click)="showImpressum = false">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Impressum</h2>
+        <button class="modal-close" (click)="showImpressum = false" title="Close">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="impressum-section">
+          <h3>Angaben gemäß § 5 TMG</h3>
+          <p><strong>Hans Fischer</strong></p>
+          <p>Wilhelm-Diek-Str. 18</p>
+          <p>39116 Magdeburg</p>
+        </div>
+
+        <div class="impressum-section">
+          <h3>Kontakt</h3>
+          <p>E-Mail: <a href="mailto:contact@hans-fischer.com">contact@hans-fischer.com</a></p>
+        </div>
+
+        <div class="impressum-section">
+          <h3>Haftungsausschluss</h3>
+          <h4>Haftung für Inhalte</h4>
+          <p>Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
+
+          <h4>Haftung für Links</h4>
+          <p>Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.</p>
+
+          <h4>Urheberrecht</h4>
+          <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
