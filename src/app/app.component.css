@@ -693,6 +693,24 @@
   right: -0.15mm;
 }
 
+/* Crop lines - border around the entire placeholder */
+.crop-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+  pointer-events: none;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+/* For round placeholders, make the crop line circular */
+.placeholder.round .crop-line {
+  border-radius: 50%;
+}
+
 .placeholder-content {
   display: flex;
   flex-direction: column;
@@ -822,10 +840,10 @@
   background: white;
   color: #6b7280;
   padding: 1rem 2rem;
-  margin: 0 auto 20px auto;
+  margin: 0 2rem 20px 2rem;
   margin-top: auto;
-  max-width: 1740px;
-  width: 100%;
+  max-width: 1800px;
+  width: calc(100% - 4rem);
   border-radius: 12px;
   border: 1px solid #e5e7eb;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -1090,12 +1108,51 @@
 
 /* Print Styles - Dynamic dimensions handled by TypeScript */
 @media print {
+  /* Page setup */
+  @page {
+    margin: 0;
+    size: auto;
+  }
+
+  /* Hide non-print elements */
   .header,
   .control-panel,
   .no-print {
     display: none !important;
   }
 
+  /* Reset body and containers */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .app-container {
+    background: white !important;
+  }
+
+  .main-content {
+    display: block !important;
+  }
+
+  .print-preview {
+    display: block !important;
+  }
+
+  .preview-container {
+    display: block !important;
+  }
+
+  /* Paper element */
+  .paper {
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Grid and placeholders */
   .grid-container {
     position: absolute !important;
     top: 0 !important;
@@ -1105,23 +1162,32 @@
   .placeholder {
     border: none !important;
     background: none !important;
-    overflow: visible !important; /* Allow crop marks to extend outside */
-    /* Force exact dimensions in print */
+    overflow: visible !important;
     box-sizing: border-box !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-    /* Prevent any size adjustments */
-    min-width: auto !important;
-    max-width: none !important;
-    min-height: auto !important;
-    max-height: none !important;
   }
 
   .placeholder-content {
     display: none !important;
   }
 
-  /* Ensure crop marks are visible and black in print */
+  /* Images */
+  .image-container {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .image-container img {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    transform-origin: top left !important;
+  }
+
+  /* Crop marks */
   .crop-mark::before,
   .crop-mark::after {
     -webkit-print-color-adjust: exact !important;
@@ -1129,19 +1195,11 @@
     background: #000 !important;
   }
 
-  /* Ensure images print at exact size with proper scaling */
-  .image-container {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-  .image-container img {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    /* Ensure transform is preserved during print */
-    transform-origin: top left !important;
+  /* Crop lines */
+  .crop-line {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    border-color: #000 !important;
   }
 }
 

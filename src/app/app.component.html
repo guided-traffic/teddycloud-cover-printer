@@ -179,6 +179,16 @@
             Show Crop Marks
           </label>
         </div>
+        <div class="form-group checkbox-group options-checkbox">
+          <label for="show-crop-lines">
+            <input
+              type="checkbox"
+              id="show-crop-lines"
+              [(ngModel)]="showCropLines"
+            />
+            Show Crop Lines
+          </label>
+        </div>
         <div class="button-group">
           <button class="btn btn-secondary" (click)="restoreSettings()" title="Restore default settings">
             Restore Settings
@@ -262,6 +272,9 @@
                 <div class="crop-mark crop-mark-bl"></div>
                 <div class="crop-mark crop-mark-br"></div>
               </div>
+
+              <!-- Crop lines for cutting (border around placeholder) -->
+              <div class="crop-line" *ngIf="showCropLines"></div>
 
               <!-- Empty placeholder content -->
               <div class="placeholder-content" *ngIf="!placeholder.imageData">

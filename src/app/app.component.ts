@@ -75,6 +75,9 @@ export class AppComponent {
   // Show crop marks for cutting
   showCropMarks = true;
 
+  // Show crop lines around pictures
+  showCropLines = false;
+
   // Error handling
   hasLayoutError = false;
   errorMessage = '';
