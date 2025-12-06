@@ -40,5 +40,5 @@ jobs:
         env:
           LOG_LEVEL: ${{ inputs.logLevel || 'info' }}
           RENOVATE_AUTODISCOVER: 'true'
-          RENOVATE_AUTODISCOVER_FILTER: 'guided-traffic/internal-secrets-operator'
+          RENOVATE_AUTODISCOVER_FILTER: 'guided-traffic/teddycloud-cover-printer'
           RENOVATE_REQUIRE_CONFIG: 'required'
