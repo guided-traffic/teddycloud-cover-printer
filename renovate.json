@@ -1,0 +1,58 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":automergeMinor",
+    "group:allNonMajor"
+  ],
+  "labels": ["dependencies"],
+  "rangeStrategy": "pin",
+  "packageRules": [
+    {
+      "description": "Group Angular packages together",
+      "matchPackagePatterns": ["^@angular/", "^@angular-devkit/"],
+      "groupName": "Angular",
+      "groupSlug": "angular"
+    },
+    {
+      "description": "Group TypeScript and related packages",
+      "matchPackageNames": ["typescript", "tslib"],
+      "groupName": "TypeScript"
+    },
+    {
+      "description": "Group testing packages (Karma, Jasmine)",
+      "matchPackagePatterns": ["^karma", "^jasmine"],
+      "matchPackageNames": ["@types/jasmine"],
+      "groupName": "Testing"
+    },
+    {
+      "description": "Group Docker updates",
+      "matchManagers": ["dockerfile"],
+      "groupName": "Docker"
+    },
+    {
+      "description": "Automerge patch updates",
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    },
+    {
+      "description": "Automerge minor updates for dev dependencies",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor"],
+      "automerge": true
+    },
+    {
+      "description": "Do not automerge major updates",
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "automerge": true
+  },
+  "lockFileMaintenance": {
+    "enabled": true
+  }
+}
