@@ -1,4 +1,4 @@
-FROM node:22 AS buildtime
+FROM node:22.21.1 AS buildtime
 
 # Install envsubst
 RUN apt update && apt-get install -y gettext-base
