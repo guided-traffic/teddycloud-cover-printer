@@ -10,15 +10,11 @@
   "rangeStrategy": "pin",
   "packageRules": [
     {
-      "description": "Group Angular packages together",
+      "description": "Group Angular packages together with TypeScript (Angular has strict TS version requirements)",
       "matchPackagePatterns": ["^@angular/", "^@angular-devkit/"],
+      "matchPackageNames": ["typescript", "tslib", "zone.js"],
       "groupName": "Angular",
       "groupSlug": "angular"
-    },
-    {
-      "description": "Group TypeScript and related packages",
-      "matchPackageNames": ["typescript", "tslib"],
-      "groupName": "TypeScript"
     },
     {
       "description": "Group testing packages (Karma, Jasmine)",
